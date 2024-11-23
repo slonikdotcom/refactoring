@@ -33,11 +33,15 @@ public class GildedRose {
     private void updateQualityForItem(Item item) {
         if (item.name.equals("Aged Brie")) {
             increaseQuality(item);
-        } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            updateBackstagePassQuality(item);
-        } else {
-            decreaseQuality(item);
+            return;
         }
+
+        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            updateBackstagePassQuality(item);
+            return;
+        }
+
+        decreaseQuality(item);
     }
 
     private void updateBackstagePassQuality(Item item) {
@@ -55,11 +59,15 @@ public class GildedRose {
     private void handleExpiredItem(Item item) {
         if (item.name.equals("Aged Brie")) {
             increaseQuality(item);
-        } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            item.quality = 0;
-        } else {
-            decreaseQuality(item);
+            return;
         }
+
+        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            item.quality = 0;
+            return;
+        }
+
+        decreaseQuality(item);
     }
 
     private void updateSellInForItem(Item item) {
