@@ -12,9 +12,11 @@ public class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
 
-        Item item = app.getItemCollection().getItems().get(0); // Отримуємо перший елемент
-        assertEquals("foo", item.getName().getValue());
-        assertEquals(-1, item.getSellIn().getValue());
-        assertEquals(0, item.getQuality().getValue());
+        Item item = app.getItemCollection().getItems().get(0);
+        ItemAttributes attributes = item.getAttributes();
+
+        assertEquals("foo", attributes.getName().getValue());
+        assertEquals(-1, attributes.getSellIn().getValue());
+        assertEquals(0, attributes.getQuality().getValue());
     }
 }

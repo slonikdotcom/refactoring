@@ -30,10 +30,11 @@ public class TexttestFixture {
             System.out.println("-------- day " + i + " --------");
             System.out.println("name, sellIn, quality");
 
-            for (Item item : items) {
-                System.out.println(item.getName().getValue() + ", " +
-                        item.getSellIn().getValue() + ", " +
-                        item.getQuality().getValue());
+            for (Item item : app.getItemCollection().getItems()) {
+                ItemAttributes attributes = item.getAttributes();
+                System.out.println(attributes.getName().getValue() + ", " +
+                        attributes.getSellIn().getValue() + ", " +
+                        attributes.getQuality().getValue());
             }
 
             System.out.println();

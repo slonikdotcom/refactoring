@@ -26,59 +26,60 @@ public class ItemCollection {
     }
 
     private void updateItemQuality(Item item) {
-        if (isLegendaryItem(item)) {
+        ItemAttributes attributes = item.getAttributes();
+        if (isLegendaryItem(attributes)) {
             return;
         }
 
-        updateQualityForItem(item);
-        item.getSellIn().decrease();
+        updateQualityForItem(attributes);
+        attributes.getSellIn().decrease();
 
-        if (item.getSellIn().isExpired()) {
-            handleExpiredItem(item);
+        if (attributes.getSellIn().isExpired()) {
+            handleExpiredItem(attributes);
         }
     }
 
-    private boolean isLegendaryItem(Item item) {
-        return item.getName().equals("Sulfuras, Hand of Ragnaros");
+    private boolean isLegendaryItem(ItemAttributes attributes) {
+        return attributes.getName().equals("Sulfuras, Hand of Ragnaros");
     }
 
-    private void updateQualityForItem(Item item) {
-        if (item.getName().equals("Aged Brie")) {
-            item.getQuality().increase();
+    private void updateQualityForItem(ItemAttributes attributes) {
+        if (attributes.getName().equals("Aged Brie")) {
+            attributes.getQuality().increase();
             return;
         }
 
-        if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-            updateBackstagePassQuality(item);
+        if (attributes.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
+            updateBackstagePassQuality(attributes);
             return;
         }
 
-        item.getQuality().decrease();
+        attributes.getQuality().decrease();
     }
 
-    private void updateBackstagePassQuality(Item item) {
-        item.getQuality().increase();
+    private void updateBackstagePassQuality(ItemAttributes attributes) {
+        attributes.getQuality().increase();
 
-        if (item.getSellIn().getValue() < 11) {
-            item.getQuality().increase();
+        if (attributes.getSellIn().getValue() < 11) {
+            attributes.getQuality().increase();
         }
 
-        if (item.getSellIn().getValue() < 6) {
-            item.getQuality().increase();
+        if (attributes.getSellIn().getValue() < 6) {
+            attributes.getQuality().increase();
         }
     }
 
-    private void handleExpiredItem(Item item) {
-        if (item.getName().equals("Aged Brie")) {
-            item.getQuality().increase();
+    private void handleExpiredItem(ItemAttributes attributes) {
+        if (attributes.getName().equals("Aged Brie")) {
+            attributes.getQuality().increase();
             return;
         }
 
-        if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-            item.getQuality().reset();
+        if (attributes.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
+            attributes.getQuality().reset();
             return;
         }
 
-        item.getQuality().decrease();
+        attributes.getQuality().decrease();
     }
 }
