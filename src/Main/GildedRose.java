@@ -1,7 +1,7 @@
 package Main;
 
 public class GildedRose {
-    public Item[] items;
+    public final Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -19,70 +19,54 @@ public class GildedRose {
         }
 
         updateQualityForItem(item);
-        updateSellInForItem(item);
+        item.getSellIn().decrease();
 
-        if (item.sellIn < 0) {
+        if (item.getSellIn().isExpired()) {
             handleExpiredItem(item);
         }
     }
 
     private boolean isLegendaryItem(Item item) {
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
+        return item.getName().equals("Sulfuras, Hand of Ragnaros");
     }
 
     private void updateQualityForItem(Item item) {
-        if (item.name.equals("Aged Brie")) {
-            increaseQuality(item);
+        if (item.getName().equals("Aged Brie")) {
+            item.getQuality().increase();
             return;
         }
 
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
             updateBackstagePassQuality(item);
             return;
         }
 
-        decreaseQuality(item);
+        item.getQuality().decrease();
     }
 
     private void updateBackstagePassQuality(Item item) {
-        increaseQuality(item);
+        item.getQuality().increase();
 
-        if (item.sellIn < 11) {
-            increaseQuality(item);
+        if (item.getSellIn().getValue() < 11) {
+            item.getQuality().increase();
         }
 
-        if (item.sellIn < 6) {
-            increaseQuality(item);
+        if (item.getSellIn().getValue() < 6) {
+            item.getQuality().increase();
         }
     }
 
     private void handleExpiredItem(Item item) {
-        if (item.name.equals("Aged Brie")) {
-            increaseQuality(item);
+        if (item.getName().equals("Aged Brie")) {
+            item.getQuality().increase();
             return;
         }
 
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            item.quality = 0;
+        if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
+            item.getQuality().reset();
             return;
         }
 
-        decreaseQuality(item);
-    }
-
-    private void updateSellInForItem(Item item) {
-        item.sellIn--;
-    }
-
-    private void increaseQuality(Item item) {
-        if (item.quality < 50) {
-            item.quality++;
-        }
-    }
-
-    private void decreaseQuality(Item item) {
-        if (item.quality > 0) {
-            item.quality--;
-        }
+        item.getQuality().decrease();
     }
 }
